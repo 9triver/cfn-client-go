@@ -1,0 +1,25 @@
+syntax = "proto3";
+package data;
+
+option go_package = "github.com/9triver/cfn/proto/data";
+option java_package = "com.github9triver.cfn.proto.data";
+
+message Resource {
+  CPU CPU = 1;
+  Memory Memory = 2;
+  repeated string Tags = 3;
+}
+
+message GPU {
+  string cores = 1;
+}
+
+message CPU {
+  string cores = 1;
+  string arch = 2;
+}
+
+message Memory {
+  string capacity = 1;
+}
+

@@ -1,0 +1,23 @@
+syntax = "proto3";
+package data;
+
+option go_package = "github.com/9triver/cfn/proto/data";
+option java_package = "com.github9triver.cfn.proto.data";
+
+import "common.proto";
+import "data/resource.proto";
+
+message AppendPyFunc {
+  string Name = 1; // function name
+  repeated string Params = 2; //function params
+  string Venv = 3; // function virtual environment
+  repeated string Requirements = 4; // function dependencies
+  bytes PickledObject = 5; // encoded function impl
+  proto.Language Language = 6; // return type of function
+  Resource Resource = 7; // requested resources by task (added by kekwy 25/4/16)
+}
+
+
+service FunctionService {
+  rpc deployPyFunc(AppendPyFunc) returns (proto.ServiceReplay) {}
+}

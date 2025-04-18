@@ -1,0 +1,15 @@
+syntax = "proto3";
+package proto;
+option go_package = "github.com/9triver/cfn/proto";
+
+// Language of supported object
+enum Language {
+  LANG_UNKNOWN = 0;
+  LANG_JSON = 1; // Values that can be represented as JSON string, can be encoded/decoded
+  LANG_GO = 2; // Values that are only compatible with Go actors.
+  LANG_PYTHON = 3; // Values that are only compatible with Python actors.
+}
+
+message ServiceReplay {
+
+}
