@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	newClient, err := client.NewClient("localhost:8080")
+	newClient, err := client.NewClient("localhost:9090")
 	if err != nil {
 		panic(err)
 	}
@@ -24,4 +24,5 @@ func main() {
 		panic(err)
 	}
 	fmt.Println("Deployed PyFunc:", replay)
+	defer newClient.Close()
 }

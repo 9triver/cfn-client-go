@@ -12,8 +12,6 @@ import (
 type Client struct {
 	address string
 	conn    *grpc.ClientConn
-	ctx     context.Context
-	cancel  context.CancelFunc
 	/* service clients */
 	functionServiceClient data.FunctionServiceClient
 }
@@ -23,16 +21,10 @@ func NewClient(address string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer conn.Close()
-
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
 
 	client := &Client{
 		address: address,
 		conn:    conn,
-		ctx:     ctx,
-		cancel:  cancel,
 	}
 
 	/* init service clients */
@@ -41,7 +33,10 @@ func NewClient(address string) (*Client, error) {
 }
 
 func (client *Client) DeployPyFunc(appendPyFunc *data.AppendPyFunc) (*proto.ServiceReplay, error) {
-	replay, err := client.functionServiceClient.DeployPyFunc(client.ctx, appendPyFunc)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+
+	replay, err := client.functionServiceClient.DeployPyFunc(ctx, appendPyFunc)
 	if err != nil {
 		return nil, err
 	}
@@ -49,6 +44,5 @@ func (client *Client) DeployPyFunc(appendPyFunc *data.AppendPyFunc) (*proto.Serv
 }
 
 func (client *Client) Close() {
-	client.cancel()
 	client.conn.Close()
 }
