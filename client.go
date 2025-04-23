@@ -33,7 +33,7 @@ func NewClient(address string) (*Client, error) {
 }
 
 func (client *Client) DeployPyFunc(appendPyFunc *data.AppendPyFunc) (*proto.ServiceReplay, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute*10)
 	defer cancel()
 
 	replay, err := client.functionServiceClient.DeployPyFunc(ctx, appendPyFunc)
