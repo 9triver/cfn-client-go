@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	newClient, err := client.NewClient("localhost:9090")
+	newClient, err := client.NewClient("localhost:9090") // TODO: 修改为 CFN 中 Head 节点的 gRPC 地址
 	//newClient, err := client.NewClient("localhost:8667")
 	if err != nil {
 		panic(err)
